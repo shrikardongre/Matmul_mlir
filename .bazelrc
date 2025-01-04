@@ -1,0 +1,6 @@
+build --action_env=BAZEL_CXXOPTS=-std=c++17
+test --test_output=all
+
+
+#build --action_env=BAZEL_CXXOPTS=-std=c++17: This tells Bazel, "Hey, when you build something, make sure you're using the cool C++17 language to talk to the blocks!"
+#test --test_output=all: This says, "When you test the blocks, show me everything that's happening, so I can see if it's working or not!"

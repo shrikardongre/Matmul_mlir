@@ -1,0 +1,5 @@
+# ignore these bazel build files
+bazel-bin
+bazel-Matmul_mlir
+bazel-out
+bazel-testlogs
