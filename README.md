@@ -1,36 +1,35 @@
 MLIR - DSL;
 
 Proposed code structure: 
-
-
-matmul-dialect/
-├── WORKSPACE                # Bazel workspace file
-├── BUILD                    # Bazel build file for the root
-├── include/                 # Headers for dialect, passes, and utilities
-│   ├── matmul/
-│   │   ├── MatmulOps.td     # TableGen definitions for the matmul dialect
-│   │   ├── MatmulDialect.h  # Header for the matmul dialect
-│   │   ├── MatmulOps.h      # Header for operations in the matmul dialect
-│   │   └── MatmulPasses.h   # Header for matmul-specific MLIR passes
-│   ├── Passes/
-│   │   └── Passes.h         # Shared header for all passes
-├── lib/                     # Implementation files
-│   ├── matmul/
-│   │   ├── MatmulDialect.cpp # Implementation of the matmul dialect
-│   │   ├── MatmulOps.cpp    # Implementation of matmul operations
-│   │   └── MatmulPasses.cpp # Implementation of matmul-specific passes
-├── test/                    # Test cases for dialect, passes, and tools
-│   ├── matmul/
-│   │   ├── dialect.mlir     # Test cases for the matmul dialect
-│   │   ├── passes.mlir      # Test cases for matmul-specific passes
-│   │   └── codegen.mlir     # Test cases for matmul lowering/codegen
-├── tools/                   # Tools for custom syntax parsing and conversion
-│   ├── matmul-translate/
-│   │   ├── MatmulParser.cpp # Custom syntax parser
-│   │   ├── MatmulPrinter.cpp # Printer for custom syntax
-│   │   └── BUILD            # Bazel build file for the tools
-├── bazel/
-│   └── BUILD.tpl            # Template for shared Bazel rules
-└── third_party/
-    └── mlir/                # External MLIR dependencies for Bazel
-        ├── BUILD            # Bazel build file for MLIR
+```mermaid
+graph TD;
+    A[matmul-dialect] --> B[WORKSPACE];
+    A --> C[BUILD];
+    A --> D[include/];
+    D --> E[matmul/];
+    E --> F[MatmulOps.td];
+    E --> G[MatmulDialect.h];
+    E --> H[MatmulOps.h];
+    E --> I[MatmulPasses.h];
+    D --> J[Passes/];
+    J --> K[Passes.h];
+    A --> L[lib/];
+    L --> M[matmul/];
+    M --> N[MatmulDialect.cpp];
+    M --> O[MatmulOps.cpp];
+    M --> P[MatmulPasses.cpp];
+    A --> Q[test/];
+    Q --> R[matmul/];
+    R --> S[dialect.mlir];
+    R --> T[passes.mlir];
+    R --> U[codegen.mlir];
+    A --> V[tools/];
+    V --> W[matmul-translate/];
+    W --> X[MatmulParser.cpp];
+    W --> Y[MatmulPrinter.cpp];
+    W --> Z[BUILD];
+    A --> AA[bazel/];
+    AA --> AB[BUILD.tpl];
+    A --> AC[third_party/];
+    AC --> AD[mlir/];
+    AD --> AE[BUILD];
