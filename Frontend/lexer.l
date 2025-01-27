@@ -4,7 +4,7 @@
   using namespace std ;
 
 
-  int line = 1;  
+  int line = 1;  // Initialize line number to 1
   extern int yylex();
   
 %}
@@ -13,7 +13,7 @@
 %x comment
 
 whitespace           (" ")
-newline              (\n) 
+newline              ("\n") 
 integer              (-?[0-9]+)
 float                (-?[0-9]*\.[0-9]+)
 long_long            (-?[0-9]+[lL]{2})
@@ -30,7 +30,7 @@ terminate            (";")
 
 
 {whitespace}            {;}  
-{newline}               {line++;}  
+{newline}               {line++; }  
 
 {integer}               {printf("Integer: %s\n", yytext);}  
 {float}                 {printf("Float: %s\n", yytext);}
@@ -63,7 +63,7 @@ int main(){
     while(yylex());
     
     fclose(fhandle);  
-    std::cout << "Total lines processed: " << line << std::endl;
+        std::cout << "Total lines processed: " << line << std::endl;
     
     return 0;
 }
