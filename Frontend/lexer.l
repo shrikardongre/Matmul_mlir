@@ -42,7 +42,7 @@ terminate            (";")
 {relational_operators}  {printf("Relational Operator: %s\n", yytext);}  // Print relational operators
 {assignment_operator}   {printf("Assignment Operator: %s\n", yytext);}  // Print assignment operator
 {identifier}            {printf("Identifier: %s\n", yytext);}  // Print identifiers
-{terminal}              {printf("Terminal: %s\n", yytext);}  // Print terminal (semicolon)
+{terminal}              {printf("Terminal: %s\n", yytext);}  // Print terminator (semicolon)
 
 
 "/*"            {BEGIN(comment); }  // Start comment state
