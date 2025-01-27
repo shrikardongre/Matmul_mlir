@@ -13,7 +13,7 @@
 
 // Token Definitions
 whitespace           (" ")
-newline              ("nl")  // "nl" token for newline in your language
+newline              ("nl") 
 integer              (-?[0-9]+)
 float                (-?[0-9]*\.[0-9]+)
 long_long            (-?[0-9]+[lL]{2})
@@ -55,10 +55,13 @@ int main(){
  FILE* fhandle = fopen("test.mat", "r");
     if(fhandle == NULL)
     {
-        std::cout << "unable to open file\n";
+        std::cout << "not a valid file type \n";
     }
 
     yyin = fhandle;
   
     while(yylex());
+
+    fclose(fhandle);  // Close the file
+    return 0;
 }
