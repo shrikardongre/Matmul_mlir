@@ -37,17 +37,14 @@ line:
     assignment ';' {
         ;
     }
-    | line assignment {
-
-    }
+   
     ;
     
 assignment:
     _identifier ':''=' expression {
         printf("expression: ");
     }
-       | line assignment {
-    }
+    
     ;
 
 

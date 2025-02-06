@@ -1,7 +1,7 @@
 %{
-  #include <iostream>
-  #include <vector>
-  using namespace std ;
+  #include <stdio.h>
+  #include"parser.tab.h"
+  
 
 
   int line = 1;  // Initialize line number to 1
@@ -42,7 +42,7 @@ terminate            (";")
 {relational_operators}  {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _relational_operators; }
 {assignment_operator}   {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _relational_operators; }
 {identifier}            {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _identifier;           }
-{terminal}              {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _terminal;             }
+{terminate}              {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _terminate;             }
 
 
 
