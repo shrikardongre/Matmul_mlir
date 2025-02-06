@@ -32,17 +32,19 @@ terminate            (";")
 {whitespace}            {;}  
 {newline}               {line++; }  
 
-{integer}               {printf("Integer: %s\n", yytext);}  
-{float}                 {printf("Float: %s\n", yytext);}
-{long_long}             {printf("Long Long: %s\n", yytext);}  
-{double}                {printf("Double: %s\n", yytext);} 
-{bool}                  {printf("Boolean: %s\n", yytext);}  
-{datatype}              {printf("Datatype: %s\n", yytext);}  
-{binary_operators}      {printf("Binary Operator: %s\n", yytext);} 
-{relational_operators}  {printf("Relational Operator: %s\n", yytext);}  
-{assignment_operator}   {printf("Assignment Operator: %s\n", yytext);}  
-{identifier}            {printf("Identifier: %s\n", yytext);} 
-{terminate}              {printf("Terminal: %s\n", yytext);} 
+{integer}               {/*printf("%s\n", yytext);*/ yylval.integer = atoi(yytext); return _integer;                        }
+{bool}                  {/*printf("%s\n", yytext);*/ yylval.boolean = atoi(yytext); return _boolean;                       }
+{float}                 {/*printf("%s\n", yytext);*/ yylval.float_val = atof(yytext); return _float;                        }
+{double}                 {/*printf("%s\n", yytext);*/ yylval.double_val = atof(yytext); return _double;                        }
+{long_long}              {/*printf("%s\n", yytext);*/ yylval.long_long_val = atoll(yytext); return _long_long ;                        }
+{datatype}              {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _datatype;             }
+{binary_operators}      {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _binary_operators;     }
+{relational_operators}  {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _relational_operators; }
+{assignment_operator}   {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _relational_operators; }
+{identifier}            {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _identifier;           }
+{terminal}              {/*printf("%s\n", yytext);*/ yylval.character_token = strdup(yytext); return _terminal;             }
+
+
 
 
 "/*"            {BEGIN(comment); }  
@@ -50,20 +52,3 @@ terminate            (";")
 <comment>\n     {line++;}  
 <comment>.      ;  
 
-%%
-int main(){
- FILE* fhandle = fopen("test.mat", "r");
-    if(fhandle == NULL)
-    {
-        std::cout << "not a valid file type \n";
-    }
-
-    yyin = fhandle;
-  
-    while(yylex());
-    
-    fclose(fhandle);  
-        std::cout << "Total lines processed: " << line << std::endl;
-    
-    return 0;
-}

@@ -5,12 +5,13 @@
 void yyerror(char* s);
 extern int yylex();
 extern int yyparse();
+extern FILE* yyin;
 %}
 
 %union{
     int integer;
     int boolean;
-    const char* character_token;
+    char* character_token;
     double double_val;
     float float_val;
     long long long_long_val;
@@ -28,15 +29,27 @@ extern int yyparse();
 %token <float_val> _float 
 %token <long_long_val> _long_long 
 
-%type <integer> expression term
+%type <integer> line expression term
 %type <character_token> assignment
 
 %%
+line: 
+    assignment ';' {
+        ;
+    }
+    | line assignment {
+
+    }
+    ;
+    
 assignment:
     _identifier ':''=' expression {
         printf("expression: ");
     }
+       | line assignment {
+    }
     ;
+
 
     expression
     : term {
@@ -94,12 +107,11 @@ assignment:
 
     %%
 
-    int main()
+int main()
 {
-    while(1)
-    {
-        yyparse();
-    }
+   
+
+    while(yyparse());
 }
 
 void yyerror (char *s) 
