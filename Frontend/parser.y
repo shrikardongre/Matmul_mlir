@@ -52,6 +52,11 @@ assignment:
     : term {
         printf("term: ");
     }
+    
+    | expression _binary_operators term{
+        printf("expression + term: ");
+    }
+
     | expression '+' term {
         printf("expression + term: ");
     }
