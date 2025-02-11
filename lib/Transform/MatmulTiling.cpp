@@ -1,25 +1,24 @@
 // To determine and initialise the Linalg Tiling Pass.
 
-  
- #include "mlir/Dialect/Linalg/Passes.h"
- #include "mlir/Dialect/Affine/IR/AffineOps.h"
- #include "mlir/Dialect/Affine/LoopUtils.h"
- #include "mlir/Dialect/Arith/Utils/Utils.h"
- #include "mlir/Dialect/ControlFlow/IR/ControlFlowOps.h"
- #include "mlir/Dialect/Func/IR/FuncOps.h"
- #include "mlir/Dialect/Linalg/IR/Linalg.h"
- #include "mlir/Dialect/Linalg/Transforms/Transforms.h"
+#include "mlir/Dialect/Affine/IR/AffineOps.h"
+#include "mlir/Dialect/Affine/LoopUtils.h"
+#include "mlir/Dialect/Arith/Utils/Utils.h"
+#include "mlir/Dialect/ControlFlow/IR/ControlFlowOps.h"
+#include "mlir/Dialect/Func/IR/FuncOps.h"
+#include "mlir/Dialect/Linalg/IR/Linalg.h"
+#include "mlir/Dialect/Linalg/Passes.h"
+#include "mlir/Dialect/Linalg/Transforms/Transforms.h"
 
- namespace mlir {
- namespace matlmul{
- #define GEN_PASS_DEF_LINALGTILINGPASS
- #include "mlir/Dialect/Linalg/Passes.h.inc"
+namespace mlir {
+namespace matlmul {
+#define GEN_PASS_DEF_LINALGTILINGPASS
+#include "mlir/Dialect/Linalg/Passes.h.inc"
 
- using namespace mlir 
- using namespace mlir::linalg
+using namespace mlir using namespace mlir::linalg
 
- //---logic for the pass to be implemented 
-struct LinalgTilingPass : public impl::LinalgTilingPassBase<LinalgTilingPass> {
+    //---logic for the pass to be implemented
+    struct LinalgTilingPass
+    : public impl::LinalgTilingPassBase<LinalgTilingPass> {
   void runOnOperation() override {
     // Get the current function being processed
     func::FuncOp funcOp = getOperation();
@@ -35,7 +34,8 @@ struct LinalgTilingPass : public impl::LinalgTilingPassBase<LinalgTilingPass> {
       tilingOptions.setTileSizes(tileSizes);
 
       // Apply tiling transformation
-      FailureOr<linalg::TiledLinalgOp> tiledOp = linalg::tileLinalgOp(matmulOp, tilingOptions);
+      FailureOr<linalg::TiledLinalgOp> tiledOp =
+          linalg::tileLinalgOp(matmulOp, tilingOptions);
       if (failed(tiledOp)) {
         matmulOp.emitError("Matmul tiling failed.");
         signalPassFailure();
@@ -43,20 +43,12 @@ struct LinalgTilingPass : public impl::LinalgTilingPassBase<LinalgTilingPass> {
     });
   }
 };
-} // namespace
+} // namespace matlmul
 
 /// Register the pass in MLIR
 std::unique_ptr<Pass> createLinalgTilingPass() {
   return std::make_unique<LinalgTilingPass>();
 }
 
-} // namespace matlmul
+} // namespace mlir
   // namespace mlir
-
-
-
-
-
-
-
- 
