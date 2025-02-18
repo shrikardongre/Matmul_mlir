@@ -90,9 +90,10 @@ int main(int argc, char *argv[]) {
   fstream input(argv[1], ios::in);
   contents_stream << input.rdbuf();
   contents = contents_stream.str();
-  vector<Token> thing = tokenize(contents);
-  for (int i = 0; i < thing.size(); i++) {
-    cout << thing[i] << endl;
+  vector<Token> tokens = tokenize(contents);
+  for (int i = 0; i < tokens.size(); i++) {
+    cout << tokens[i] << endl;
   }
+
   return 0;
 }
