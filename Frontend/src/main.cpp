@@ -78,6 +78,23 @@ vector<Token> tokenize(string &str) {
   }
   return tokens;
 }
+string tokens_to_asm(const vector<Token> &tokens) {
+  stringstream output;
+  output << "global _start\n_start:\n";
+  for (int i = 0; i < tokens.size(); i++) {
+    const Token &token = tokens.at(i);
+    if (token.type == TokenType::_return) {
+      if (i + 1 < tokens.size() && tokens.at(i + 1).type == TokenType::_int) {
+        if (i + 2 < tokens.size() && tokens.at(i + 2).type == TokenType::semi) {
+          output << "mov rax,60 \n";
+          output << "mov rdi, " << tokens.at(i + 1).value << "\n";
+          output << "syscall \n";
+        }
+      }
+    }
+  }
+  return output.str();
+}
 int main(int argc, char *argv[]) {
   if (argc != 2) {
     std::cerr << "Incorrect usage , Correct usage is.." << endl;
@@ -91,9 +108,12 @@ int main(int argc, char *argv[]) {
   contents_stream << input.rdbuf();
   contents = contents_stream.str();
   vector<Token> tokens = tokenize(contents);
-  for (int i = 0; i < tokens.size(); i++) {
-    cout << tokens[i] << endl;
-  }
+  // for (int i = 0; i < tokens.size(); i++) {
+  //   cout << tokens[i] << endl;
+  // }
+  // cout <<tokens_to_asm(tokens)<<endl;
+  fstream file("../build/out.asm", ios::out);
+  file << tokens_to_asm(tokens);
 
   return 0;
 }
